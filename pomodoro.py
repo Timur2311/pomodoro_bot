@@ -91,14 +91,11 @@ logging.basicConfig(
 # we decided to have it present as context.
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-
-    """Sends explanation on how to use the bot."""\
-        
+    """Sends explanation on how to use the bot."""  
     reply_keyboard = [
         ["/5", "/15", "/25"], 
         ["/set", "cancel", "/stats" ]
-        ]
-        
+        ]        
     chat_id = update.effective_message.chat_id
     await context.bot.send_message(
         chat_id,
@@ -107,16 +104,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 reply_keyboard, one_time_keyboard=True, resize_keyboard=True
             ),
     )
-    
-    
-    
-    
-    
-
-
-
 async def alarm(context: ContextTypes.DEFAULT_TYPE) -> None:
-
+    
     """Send the alarm message."""
 
     job = context.job
@@ -145,6 +134,11 @@ def remove_job_if_exists(name: str, context: ContextTypes.DEFAULT_TYPE) -> bool:
 
 
 
+
+async def callback_30(context: CallbackContext):
+    await context.bot.send_message(chat_id=1497367630, text='A single message with 20s delay')
+
+
 async def set_timer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     """Add a job to the queue."""
@@ -166,7 +160,7 @@ async def set_timer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         job_removed = remove_job_if_exists(str(chat_id), context)
 
-        setting_time = context.job_queue.run_once(alarm, due, chat_id=chat_id, name=str(chat_id), data=due)
+        setting_time = context.job_queue.run_once(callback_30, due)
         print(f"setting_time_object---->{setting_time}\n\n type_of_object----{type(setting_time)}")
         
 
@@ -209,7 +203,7 @@ def main() -> None:
 
     # Create the Application and pass it your bot's token.
 
-    application = Application.builder().token("5340766173:AAGcuPZbi3vxaE8W5ClhgEZQYy4JzLWDD80").build()
+    application = Application.builder().token("").build()
 
 
     # on different commands - answer in Telegram
